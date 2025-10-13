@@ -1,0 +1,63 @@
+
+classDiagram
+    class Handler
+    Handler : -int handler_fd_
+    Handler : -bool isInEventLoop_
+    Handler : -function<void()> callback_ 
+    Handler : + char message_buffer[BUFFER_SIZE]
+    Handler : + void setCallback(function<void()> cb)
+    Handler : + int getHandlerFd()
+    Handler : + void handleEvent()
+    Handler : + void setInEventLoop()
+    Handler : + EventType getEventType()
+
+    class ReadHandler
+
+    class WriteHandler
+
+    class Acceptor
+    Acceptor : -int socket_fd_
+    Acceptor : -int server_fd_
+    Acceptor : -sockaddr_in address_
+    Acceptor : +void server_bind
+    Acceptor : +void server_listen
+    Acceptor : +void server_accept(int server_fd)
+    Acceptor : +int get_server_fd()
+    Acceptor : +int get_socket_fd()
+
+    class Epoller {
+        -int epoll_fd_
+        -std::vector&lt;epoll_event&gt; events_
+        -std::unordered_map&lt;int, std::weak_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;&gt; handler_map_
+        +void update(const std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;& ptr_handler)
+        +void remove(const std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;& ptr_handler)
+        +std::vector&lt;std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;&gt; poll()
+    }
+
+    class Reactor {
+        -std::unique_ptr&lt;Epoller&lt;POLLER_SIZE, BUFFER_SIZE&gt;&gt; epoller_
+        +void register(const std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;& handler)
+        +void unregister(const std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;& handler)
+        +void eventLoop()
+    }
+
+    class Server {
+        -int server_fd
+        -Acceptor&lt;PORT&gt; acceptor_
+        -Reactor reactor_;
+        -std::map&lt;int, std::shared_ptr&lt;Handler&lt;BUFFER_SIZE&gt;&gt;&gt; client_handlers_
+        +void start_server()
+        +void accept(int server_fd)
+        +void read_client(int client_fd)
+        +void write_client(int client_fd)
+    }
+
+    ReadHandler --|> Handler
+    WriteHandler --|> Handler
+    Reactor "1" *-- "1" Epoller : owns
+    Epoller "1" o-- "1" Handler : uses
+    Epoller "1" o-- "1" ReadHandler : uses
+    Epoller "1" o-- "1" WriteHandler : uses
+    Server "1" *-- "1" Acceptor: owns
+    Server "1" *-- "1" Reactor: owns
+    Server "1" o-- "1" Handler: uses

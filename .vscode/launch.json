@@ -1,0 +1,44 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "C++ Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/OTA_Gateway",
+        
+        "setupCommands": [
+                {
+                    "description": "启用 STL 可视化",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "加载 GDB 的 Python 脚本",
+                    "text": "source /usr/share/gcc-<version>/python/libstdcxx/__init__.py",
+                    "ignoreFailures": true
+                }
+        ],
+
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        //"customLaunchSetupCommands": [
+        //  { "text": "target-run", "description": "run target", "ignoreFailures": false }
+        //],
+        "targetArchitecture": "x86_64",
+        "launchCompleteCommand": "exec-run",
+        "linux": {
+          "MIMode": "gdb",
+          "miDebuggerPath": "/usr/bin/gdb"
+        },
+        "osx": {
+          "MIMode": "lldb"
+        },
+        "windows": {
+          "MIMode": "gdb",
+          "miDebuggerPath": "C:\\MinGw\\bin\\gdb.exe"
+        }
+      }
+    ]
+  }
+  

@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.10)
+project(OTA_Gateway)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -Wall -Wextra -Werror -Wpedantic")
+include_directories(Inc)
+include_directories(utility)
+add_executable(OTA_Gateway Src/main.cpp Src/Server.cpp)
+add_executable(client_test Src/client_test.cpp)
+
