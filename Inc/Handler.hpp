@@ -31,7 +31,7 @@ public:
             std::cout << "Handler created with fd: " << handler_fd_ << std::endl;
         }
 
-    ~Handler()
+    virtual ~Handler()
     {
         if (handler_fd_ != -1) {
             ::close(handler_fd_);

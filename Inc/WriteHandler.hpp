@@ -13,6 +13,11 @@ public:
         this->setEventType(EventType::Write);
         std::cout << "WriteHandler created with fd: " << handler_fd << std::endl;
     }
+
+    ~WriteHandler()
+    {
+        std::cout << "WriteHandler destroyed!" << std::endl;
+    }
 };
 
 #endif // INC_WRITEHANDLER_HPP

@@ -15,7 +15,10 @@ public:
         std::cout << "ReadHandler created with fd: " << handler_fd << std::endl;
     }
 
-    
+    ~ReadHandler()
+    {
+        std::cout << "ReadHandler destroyed!" << std::endl;
+    }
 };
 
 #endif // INC_READHANDLER_CPP
