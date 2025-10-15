@@ -1,4 +1,0 @@
-/home/muzi/Documents/OTA_Gateway/build/CMakeFiles/OTA_Gateway.dir
-/home/muzi/Documents/OTA_Gateway/build/CMakeFiles/client_test.dir
-/home/muzi/Documents/OTA_Gateway/build/CMakeFiles/edit_cache.dir
-/home/muzi/Documents/OTA_Gateway/build/CMakeFiles/rebuild_cache.dir
