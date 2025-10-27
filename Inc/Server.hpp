@@ -8,6 +8,7 @@
 #include "Acceptor.hpp"
 #include "Constant.hpp"
 #include "Reactor.hpp"
+#include "session/Session.hpp"
 
 class Server {
 public:
@@ -25,11 +26,13 @@ public:
     void accept(int server_fd);
     void read_client(int client_fd);
     void write_client(int client_fd);
+    void checkTimeouts();
+    void close_session(int fd);
 private:
     int server_fd_;
     Acceptor<PORT> acceptor_;
     Reactor reactor_;
-    std::map<int, std::shared_ptr<Handler<BUFFER_SIZE>>> client_handlers_;
+    std::unordered_map<int, std::shared_ptr<Session>> sessions_;
 };
 
 #endif // INC_SERVER_HPP
