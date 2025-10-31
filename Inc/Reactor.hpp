@@ -22,14 +22,14 @@ public:
         std::cout << "Reactor destroyed." << std::endl;
     }
 
-    void registerHandler(const std::shared_ptr<Handler<BUFFER_SIZE>>& handler)
+    void registerHandler(std::shared_ptr<Handler<BUFFER_SIZE>> handler)
     {
-        epoller_.update(handler);
+        epoller_.update(std::move(handler));
     }
 
-    void unregisterHandler(const std::shared_ptr<Handler<BUFFER_SIZE>>& handler)
+    void unregisterHandler(std::shared_ptr<Handler<BUFFER_SIZE>> handler)
     {
-        epoller_.remove(handler);
+        epoller_.remove(std::move(handler));
     }
 
     void eventLoop()
